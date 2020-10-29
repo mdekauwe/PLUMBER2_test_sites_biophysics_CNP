@@ -439,7 +439,7 @@ class RunCable(object):
                         "output%restart": ".TRUE.",
                         "cable_user%FWSOIL_SWITCH": "'standard'",
                         "cable_user%GS_SWITCH": "'medlyn'",
-                        "cable_user%limit_labile": ".TRUE.",
+                        "cable_user%l_limit_labile": ".TRUE.",
                         "cable_user%litter": ".TRUE.",
         }
         # Make sure the dict isn't empty
@@ -492,7 +492,7 @@ class RunCable(object):
                         "spincasa": ".FALSE.",
                         "icycle": "%d" % (self.biogeochem_id),
                         "leaps": ".TRUE.",
-                        "cable_user%limit_labile": "%s" % (restrict_labile),
+                        "cable_user%l_limit_labile": "%s" % (restrict_labile),
         }
         adjust_nml_file(self.nml_fname, replace_dict)
 
@@ -540,7 +540,7 @@ class RunCable(object):
                             "output%restart": ".TRUE.",
                             "output%averaging": "'daily'",
                             "leaps": ".TRUE.",
-                            "cable_user%limit_labile": ".FALSE.",
+                            "cable_user%l_limit_labile": ".FALSE.",
             }
         else:
             replace_dict = {
@@ -556,9 +556,9 @@ class RunCable(object):
                         "cable_user%CASA_DUMP_WRITE": ".FALSE.",
                         "spincasa": ".FALSE.",
                         "output%restart": ".FALSE.",
-                        "output%averaging": "'daily'",
+                        "output%averaging": "'all'",
                         "leaps": ".TRUE.",
-                        "cable_user%limit_labile": ".FALSE.",
+                        "cable_user%l_limit_labile": ".FALSE.",
 
         }
         adjust_nml_file(self.nml_fname, replace_dict)
@@ -653,6 +653,7 @@ if __name__ == "__main__":
         C.main(sci_config)
     """
 
+
     #
     ## AU-Tum
     #
@@ -660,7 +661,7 @@ if __name__ == "__main__":
     met_subset = ['AU-Tum_2002-2016_OzFlux_Met.nc']
     site = met_subset[0].split(".")[0].split("_")[0]
 
-    """
+
     biogeochem = "C"
     dont_have_restart = True
     C = RunCable(met_dir=met_dir, log_dir=log_dir, output_dir=output_dir,
@@ -670,7 +671,7 @@ if __name__ == "__main__":
                  num_cores=num_cores, biogeochem=biogeochem,
                  co2_ndep_dir=co2_ndep_dir)
     C.main(sci_config)
-    """
+
 
     biogeochem = "CN"
     dont_have_restart = False
@@ -699,6 +700,7 @@ if __name__ == "__main__":
                  num_cores=num_cores, biogeochem=biogeochem,
                  co2_ndep_dir=co2_ndep_dir)
     C.main(sci_config, dont_have_restart, num)
+
 
     #
     ## FI-Hyy
@@ -782,7 +784,6 @@ if __name__ == "__main__":
     rst_files = glob.glob("%s/%s_%s_cable_rst_*.nc" % (restart_dir, site, "CN"))
     last_rst_file = sorted(rst_files, key=os.path.getmtime)[-1]
     num = int(last_rst_file.split("_")[4].split(".")[0])
-
     C = RunCable(met_dir=met_dir, log_dir=log_dir, output_dir=output_dir,
                  dump_dir=dump_dir, restart_dir=restart_dir,
                  aux_dir=aux_dir, namelist_dir=namelist_dir,
