@@ -81,16 +81,13 @@ def plot_carbon_fluxes(cycle, ds, ds_cable):
     ax9.plot(ds.time, ds.csoil[:,2], label="Passive")
     ax9.legend(numpoints=1, loc="best")
 
-    #plot_fname = "%s_simulation_carbon_fluxes_and_pools.pdf" % (cycle)
     plot_fname = "%s_simulation_carbon_fluxes_and_pools.png" % (cycle)
     plot_dir = "plots"
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
 
     fig.tight_layout()
-    #fig.savefig(os.path.join(plot_dir, plot_fname), bbox_inches='tight',
-    #            pad_inches=0.1)
-    fig.savefig(os.path.join(plot_dir, plot_fname), dpi=150, bbox_inches='tight',
+    fig.savefig(os.path.join(plot_dir, plot_fname), bbox_inches='tight',
                 pad_inches=0.1)
 
 
@@ -149,16 +146,13 @@ def plot_nitrogen_fluxes(cycle, ds):
     ax9.legend(numpoints=1, loc="best")
 
 
-    #plot_fname = "%s_simulation_nitrogen_fluxes.pdf" % (cycle)
     plot_fname = "%s_simulation_nitrogen_fluxes.png" % (cycle)
     plot_dir = "plots"
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
 
     fig.tight_layout()
-    #fig.savefig(os.path.join(plot_dir, plot_fname), bbox_inches='tight',
-    #            pad_inches=0.1)
-    fig.savefig(os.path.join(plot_dir, plot_fname), dpi=150, bbox_inches='tight',
+    fig.savefig(os.path.join(plot_dir, plot_fname), bbox_inches='tight',
                 pad_inches=0.1)
 
 def plot_phosphorus_fluxes(cycle, ds):
@@ -211,16 +205,13 @@ def plot_phosphorus_fluxes(cycle, ds):
     ax8.plot(ds.time, ds.pplant[:,2]/ds.nplant[:,2], label="Root")
     ax8.legend(numpoints=1, loc="best")
 
-    #plot_fname = "%s_simulation_phosphorus_fluxes.pdf" % (cycle)
     plot_fname = "%s_simulation_phosphorus_fluxes.png" % (cycle)
     plot_dir = "plots"
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
 
     fig.tight_layout()
-    #fig.savefig(os.path.join(plot_dir, plot_fname), bbox_inches='tight',
-    #            pad_inches=0.1)
-    fig.savefig(os.path.join(plot_dir, plot_fname), dpi=150, bbox_inches='tight',
+    fig.savefig(os.path.join(plot_dir, plot_fname), bbox_inches='tight',
                 pad_inches=0.1)
 
 def plot_cnp_states(cycle, ds):
@@ -281,16 +272,13 @@ def plot_cnp_states(cycle, ds):
     ax6.plot(ds.time, ds.psoil[:,2], label="Pw")
     ax6.legend(numpoints=1, loc="best")
 
-    #plot_fname = "%s_simulation_state.pdf" % (cycle)
     plot_fname = "%s_simulation_state.png" % (cycle)
     plot_dir = "plots"
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
 
     fig.tight_layout()
-    #fig.savefig(os.path.join(plot_dir, plot_fname), bbox_inches='tight',
-    #            pad_inches=0.1)
-    fig.savefig(os.path.join(plot_dir, plot_fname), dpi=150, bbox_inches='tight',
+    fig.savefig(os.path.join(plot_dir, plot_fname), bbox_inches='tight',
                 pad_inches=0.1)
 
 def open_casa_and_add_time(fname, start_date):
@@ -314,10 +302,21 @@ def open_cable_and_add_time(fname, start_date):
 
 if __name__ == "__main__":
 
+    fname = "outputs/AU-Tum_C_out_casa_simulation.nc"
+    ds_casa = open_casa_and_add_time(fname, start_date="01/01/2002")
 
+    fname = "outputs/AU-Tum_C_out_cable_simulation.nc"
+    ds_cable = open_cable_and_add_time(fname, start_date="01/01/2002")
 
-    #for cycle in ["C"]:
+    cycle="C"
+    plot_carbon_fluxes(cycle, ds_casa, ds_cable)
+    #plot_nitrogen_fluxes(cycle, ds_casa)
+    #plot_phosphorus_fluxes(cycle, ds_casa)
+    #plot_cnp_states(cycle, ds_casa)
+
+    """
     for cycle in ["C"]:
+    #for cycle in ["C", "CN"]:
     #for cycle in ["C", "CN", "CNP"]:
 
         fname = "*_%s_out_casa_simulation.nc" % (cycle)
@@ -333,3 +332,4 @@ if __name__ == "__main__":
         plot_nitrogen_fluxes(cycle, ds_casa)
         plot_phosphorus_fluxes(cycle, ds_casa)
         plot_cnp_states(cycle, ds_casa)
+    """
